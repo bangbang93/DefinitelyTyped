@@ -127,6 +127,7 @@ declare namespace mapboxgl {
         | 'case'
         | 'match'
         | 'coalesce'
+        | 'within'
         // Ramps, scales, curves
         | 'interpolate'
         | 'interpolate-hcl'
@@ -323,7 +324,7 @@ declare namespace mapboxgl {
 
         removeImage(name: string): this;
 
-        loadImage(url: string, callback: Function): this;
+        loadImage(url: string, callback: (error?: Error, result?: HTMLImageElement | ImageBitmap) => void): this;
 
         listImages(): string[];
 
@@ -1733,15 +1734,16 @@ declare namespace mapboxgl {
         scale?: number;
     }
 
+    type EventedListener = (object?: Object) => any;
     /**
      * Evented
      */
     export class Evented {
-        on(type: string, listener: Function): this;
+        on(type: string, listener: EventedListener): this;
 
-        off(type?: string | any, listener?: Function): this;
+        off(type?: string | any, listener?: EventedListener): this;
 
-        once(type: string, listener: Function): this;
+        once(type: string, listener: EventedListener): this;
 
         // https://github.com/mapbox/mapbox-gl-js/issues/6522
         fire(type: string, properties?: { [key: string]: any }): this;
